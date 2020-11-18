@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body  oncontextmenu="return false" onload="init()" >
+    
+    
+        <button class="buttons" onclick="easy()"> easy </button>
+        <button class="buttons" onclick="medium()"> medium </button>
+        <button class="buttons" onclick="hard()"> hard </button>
+    
+    <div class="emoji" onclick="restart()"></div>
+<div>
+    <table border="2" class="game-board">
+    </table>
+</div>
+<button  class="res-button" onclick="restart(this)">Play Again </button>
+    <script src="js/main.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>
