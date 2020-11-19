@@ -14,7 +14,16 @@ var LIVE_2 = '💖❌❌'
 var DEATH = '❌❌❌'
 var lives = 3
 var x = 0
-
+var elTime = document.querySelector('.timer')
+var elScore = document.querySelector('.score')
+var elLIves = document.querySelector('.lives')
+var shownCell;
+var className;
+var neighborsCount;
+var gInterval;
+var shownCell;
+var className;
+var neighborsCount;
 var gLevel = {
     size: 4,
     mines: 2
@@ -25,15 +34,10 @@ var gGame = {
     markedCount: 0,
     secsPassed: 0
 }
-var elScore = document.querySelector('.score')
-var elLIves = document.querySelector('.lives')
-var shownCell;
-var className;
-var neighborsCount;
+
 gBoard = buildBoard()
-
-
 function init() {
+    elTime.innerText = '0.000'
     elScore.innerText = 0
     score = 0
     lives = 3
@@ -42,6 +46,7 @@ function init() {
     gGame.isOn = true
     renderBoard(gBoard)
     changeEmoji()
+    clearInterval(gInterval)
     if (gLevel.size === 4) {
         gLevel.mines = 2
     }
@@ -52,7 +57,6 @@ function init() {
         gLevel.mines = 30
     }
 }
-
 
 function buildBoard() {
     var board = []
@@ -71,7 +75,6 @@ function buildBoard() {
         }
     }
     return board
-
 }
 
 function renderBoard(board) {
@@ -88,16 +91,13 @@ function renderBoard(board) {
                 board[cellI][cellJ].isMine = true
                 gLevel.mines--
             }
-            // console.log(board[i][j])
             var currCell = board[i][j];
-            // console.log(currCell)
             if (currCell.isMine) {
                 className = 'mine'
             }
             if (!currCell.isMine) {
                 className = 'number'
             }
-
             shownCell = empty
             strHtml += `<td data-i="${currCell.i}" data-j="${currCell.j}" class="${className}" oncontextmenu="cellRightClicked(this)" onclick="cellClicked(this)" >${shownCell} </td>`
         }
@@ -106,20 +106,7 @@ function renderBoard(board) {
     strHtml += '</tbody>'
     var elMat = document.querySelector('.game-board');
     elMat.innerHTML = strHtml;
-    // console.log(elMat)
-
 }
-var elTime = document.querySelector('.timer')
-function timer() {
-    var startTime = Date.now();
-    var gInterval = setInterval(function () {
-        var elPasedTime = Date.now() - startTime;
-        elTime.innerHTML = (elPasedTime / 1000).toFixed(
-            3
-        );
-    }, 100);
-}
-
 
 function cellRightClicked(elm) {
     gGame.markedCount++
@@ -132,7 +119,6 @@ function checkVictory() {
     elEmoji.innerText = WIN
 }
 function cellClicked(elCell) {
-    // console.log(elCell)
     if (elTime.innerText === '0.000') {
         timer()
     }
@@ -144,17 +130,20 @@ function cellClicked(elCell) {
             var count = setMinesNegsCount(i, j, gBoard)
             elCell.innerText = count
             gGame.shownCount++
-            // console.log(gGame.shownCount)
         }
         else elCell.innerText = MINE
     }
     if (count === 0) {
-        //   var cells= expandShown(i,j,gBoard) 
-        //    for(var i = 0 ; i< cells.length;i++){
-        //     while(elCell.dataset.i === cells[i].i && +elCell.dataset.j === cells[i].j){
-        //         elCell.style.backgroundColor='grey'
-        //     }
-        //    }
+        var cells = expandShown(i, j, gBoard)
+        // console.log('cells', cells);
+        // console.log('elcelli', +elCell.dataset.i)
+        // console.log('elcellj', +elCell.dataset.j)
+        // for (var x = 0; x < cells.length; x++) {
+        //     var elNum = document.querySelector('.number')
+        //     elNum.dataset.i=cells[x].i
+        //     elNum.dataset.j = cells[x].j
+        //     elNum.style.backgroundColor = 'grey'
+        // }
         elCell.style.backgroundColor = 'grey'
         elCell.style.color = 'grey'
 
@@ -164,19 +153,14 @@ function cellClicked(elCell) {
         var elScore = document.querySelector('.score')
         elScore.innerText = score
     }
-    // if(cellClicked()) continue
     if (elCell.innerText === MINE) {
         lives--
         elLIves.innerText = LIVE_1
-        // console.log(lives)
     }
     if (lives === 1) {
         elLIves.innerText = LIVE_2
     }
-    console.log('marked count ', gGame.markedCount)
-    console.log('show count ', gGame.shownCount)
-    console.log('mines',gLevel.mines)
-    console.log('size',gLevel.size**2)
+
     if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
         checkVictory()
     }
@@ -190,27 +174,21 @@ function cellClicked(elCell) {
 
 function expandShown(i, j, board) {
     var freeSpace = findNeighbors(i, j, board)
-
-    /////////////////////////////////////////////////
     return freeSpace
 }
+
 var elEmoji = document.querySelector('.emoji')
 function gameOver() {
-
     var str = ''
-    
     str = `${LOSE}`
     elEmoji.innerText = str
     gGame.isOn = false
     var elBtn = document.querySelector('.res-button')
     elBtn.style.display = 'block'
     score = 0
-    // gInterval(clearInterval)
-
-    // console.log('Game Over');
+    clearInterval(gInterval)
 }
 
-// console.log(findEmptyCells(gBoard))
 function findEmptyCells(board) {
     var arr = []
     for (var i = 0; i < board.length; i++) {
@@ -220,7 +198,6 @@ function findEmptyCells(board) {
     }
     var randomCell = arr[Math.floor(Math.random() * arr.length)]
     return randomCell
-
 }
 function findNeighbors(rowIdx, colIdx, board) {
     var arr = []
@@ -230,7 +207,6 @@ function findNeighbors(rowIdx, colIdx, board) {
             if (j < 0 || j >= board[i].length) continue;
             if (i === rowIdx && j === colIdx) continue;
             arr.push({ i, j })
-
         }
     }
     return arr
@@ -243,20 +219,17 @@ function setMinesNegsCount(rowIdx, colIdx, board) {
             if (j < 0 || j >= board[i].length) continue;
             if (i === rowIdx && j === colIdx) continue;
             if (board[i][j].isMine) neighborsCount++;
-
-
-
         }
     }
     return neighborsCount;
 }
+
 function restart(elm) {
     gGame.isOn = true
     init()
     elm.style.display = 'none'
-
+    elTime.innerText = '0.000'
 }
-
 
 makeLives()
 function makeLives() {
@@ -272,7 +245,7 @@ function easy() {
 }
 function medium() {
     gLevel.size = 8
-    gLevel.mines = 2
+    gLevel.mines = 12
     init()
 }
 
@@ -290,9 +263,16 @@ function changeEmoji() {
     return elEmoji
 }
 
-
-
 function checkVictory() {
     elEmoji.innerText = WIN
+}
 
+function timer() {
+    var startTime = Date.now();
+    gInterval = setInterval(function () {
+        var elPasedTime = Date.now() - startTime;
+        elTime.innerHTML = (elPasedTime / 1000).toFixed(
+            3
+        );
+    }, 100);
 }
