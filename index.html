@@ -8,15 +8,21 @@
 </head>
 
 <body  oncontextmenu="return false" onload="init()" >
+    <div class="timer">
+        0.000
+    </div>
     
-    
-        <button class="buttons" onclick="easy()"> easy </button>
-        <button class="buttons" onclick="medium()"> medium </button>
-        <button class="buttons" onclick="hard()"> hard </button>
-    
+    <div class="buttons">
+        <button id="easy" onclick="easy()"> easy </button>
+        <button id="medium" onclick="medium()"> medium </button>
+        <button id="hard" onclick="hard()"> hard </button>
+    </div>
     <div class="emoji" onclick="restart()"></div>
+
+    <div class="score"> 0 </div>
+    <div class="lives">  </div> 
 <div>
-    <table border="2" class="game-board">
+    <table border="7" class="game-board">
     </table>
 </div>
 <button  class="res-button" onclick="restart(this)">Play Again </button>

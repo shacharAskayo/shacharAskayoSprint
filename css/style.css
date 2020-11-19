@@ -2,30 +2,26 @@
     box-sizing: border-box;
 } */
  body{
-    background-image: url('mine.jpg');
-    background-size: 1500px;
+    background-image: url('pinkFloyd.jpg');
+    background-size: 1280px;
 
 
 }
-
-
-
 .game-board{
-
 text-align: center;
-margin-left: 675px;
-margin-top: 10px;
-background-color:#817979f3 ;
-
+/* margin-left: auto; */
+margin: auto;
+/* margin-top: 10px; */
+background-color:#5b9bcff3 ;
+border:6.3px teal solid;
+border-radius: 6px;
 }
-
 .mine:hover{
     box-shadow: 2px 2px #c7b6b6f2;
 }
 .number:hover{
     box-shadow: 2px 2px #c7b6b6f2;
 }
-
 .mine{
     text-align: center;
     width: fit-content;
@@ -40,21 +36,75 @@ background-color:#817979f3 ;
     height: 50px;
     /* block-size: fit-content; */
     font-size: auto;
+    /* color: blue; */
 } 
 
 .res-button{
-    margin-left: 530px;
+    margin: auto;
     display: none;
+    text-align: center;
+    margin-top: 10px;
+    background-color: rgba(196, 13, 13, 0.808);
+    color: wheat;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius:5px ;
+    cursor: pointer;
 }
+
 .buttons{
-    margin-left: 350px;
-    /* margin-top:  */
+    /* margin-left: 350px; */
+    /* margin: auto; */
+    margin-top: 80px;
+    text-align: center;
+}
+#easy:hover{
+    /* transition: 2s; */
+}
+#easy{
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: rgba(223, 75, 17, 0.726);
+    border: 3px solid;
+    cursor: pointer;
+    /* transform: 20px; */
+}
+#medium{
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: rgba(223, 75, 17, 0.726);
+    border: 3px solid;
+    cursor: pointer;
+}
+#hard{
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: rgba(223, 75, 17, 0.726);
+    border: 3px solid;
     cursor: pointer;
 }
 
 .emoji{
    
-    margin-left: 779px;
-    margin-top: 100px;
+    margin: auto;
+    /* margin-top: 100px; */
+    text-align: center;
     cursor: pointer;
+}
+.score{
+    font-size: 30px;
+    color: white;
+    margin: auto;
+    text-align: center;
+}
+
+.timer{
+    margin: auto;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
+
+.lives{
+    text-align: center;
+    font-size: 25px;
 }
