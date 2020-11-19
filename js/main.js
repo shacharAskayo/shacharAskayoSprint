@@ -47,6 +47,7 @@ function init() {
     renderBoard(gBoard)
     changeEmoji()
     clearInterval(gInterval)
+
     if (gLevel.size === 4) {
         gLevel.mines = 2
     }
@@ -75,6 +76,17 @@ function buildBoard() {
         }
     }
     return board
+}
+function checkVictory(board) {
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board[i].length; j++) {
+            if (gLevel.mines=== gGame.markedCount) {
+                elEmoji.innerText = WIN
+            }
+        }
+    }
+    console.log(gLevel.mines)
+    console.log(gGame.markedCount)
 }
 
 function renderBoard(board) {
@@ -112,10 +124,12 @@ function cellRightClicked(elm) {
     gGame.markedCount++
     // console.log(gGame.markedCount)
     elm.innerText = FLAG
+    checkVictory(gBoard)
     
 }
 
 function cellClicked(elCell) {
+    checkVictory(gBoard)
     if (elTime.innerText === '0.000') {
         timer()
     }
@@ -158,9 +172,9 @@ function cellClicked(elCell) {
         elLIves.innerText = LIVE_2
     }
 
-    if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
-        checkVictory() 
-    }
+    // if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
+    //     checkVictory() 
+    // }
     if (elCell.innerText === MINE && lives === 0) {
         elLIves.innerText = DEATH
         gameOver()
@@ -260,9 +274,7 @@ function changeEmoji() {
     return elEmoji
 }
 
-function checkVictory() {
-    elEmoji.innerText = WIN
-}
+
 
 function timer() {
     var startTime = Date.now();
