@@ -110,14 +110,11 @@ function renderBoard(board) {
 
 function cellRightClicked(elm) {
     gGame.markedCount++
-    console.log(gGame.markedCount)
+    // console.log(gGame.markedCount)
     elm.innerText = FLAG
-    markedCount++
+    
 }
 
-function checkVictory() {
-    elEmoji.innerText = WIN
-}
 function cellClicked(elCell) {
     if (elTime.innerText === '0.000') {
         timer()
@@ -162,7 +159,7 @@ function cellClicked(elCell) {
     }
 
     if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
-        checkVictory()
+        checkVictory() 
     }
     if (elCell.innerText === MINE && lives === 0) {
         elLIves.innerText = DEATH
