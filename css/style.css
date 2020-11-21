@@ -1,7 +1,7 @@
 /* *{
     box-sizing: border-box;
 } */
- body{
+body{
     background-image: url('pinkFloyd.jpg');
     background-size: 1280px;
 
@@ -54,13 +54,15 @@ border-radius: 6px;
 .buttons{
     /* margin-left: 350px; */
     /* margin: auto; */
-    margin-top: 80px;
+    /* margin-top: 80px; */
     text-align: center;
 }
 #easy:hover{
-    /* transition: 2s; */
+    padding: 10px;
+    background-color: tomato;
 }
 #easy{
+    transition: background-color 0.3s,padding 0.3s;
     border-radius: 8px;
     font-size: 15px;
     background-color: rgba(223, 75, 17, 0.726);
@@ -68,12 +70,21 @@ border-radius: 6px;
     cursor: pointer;
     /* transform: 20px; */
 }
+#medium:hover{
+    padding: 10px;
+    background-color: tomato;
+}
 #medium{
     border-radius: 8px;
     font-size: 15px;
     background-color: rgba(223, 75, 17, 0.726);
     border: 3px solid;
     cursor: pointer;
+    transition: background-color 0.3s,padding 0.3s;
+}
+#hard:hover{
+    padding: 10px;
+    background-color: tomato;
 }
 #hard{
     border-radius: 8px;
@@ -81,14 +92,22 @@ border-radius: 6px;
     background-color: rgba(223, 75, 17, 0.726);
     border: 3px solid;
     cursor: pointer;
+    transition: background-color 0.3s,padding 0.3s;
 }
 
+.emoji:hover{
+    padding-bottom: 30px;
+    }
 .emoji{
-   
+    transition: padding-bottom 0.5s;
     margin: auto;
     /* margin-top: 100px; */
     text-align: center;
     cursor: pointer;
+    /* position: absolute center; */
+    display:flexbox;
+    margin-left: 613.1px;
+    margin-right: 613.1px;
 }
 .score{
     font-size: 30px;
@@ -102,6 +121,12 @@ border-radius: 6px;
     color: white;
     text-align: center;
     font-size: 30px;
+    margin-top: 100px;
+    margin-bottom: 10px;
+
+    /* display: inline; */
+    /* border: teal 5px solid; */
+    /* margin-left: 600px; */
 }
 
 .lives{

@@ -33,10 +33,12 @@ var gGame = {
     isOn: false,
     shownCount: 0,
     markedCount: 0,
-    secsPassed: 0
+    secsPassed: 0,
+    isOpen: false
 }
 
 gBoard = buildBoard()
+// console.log(gBoard[0][0].isShown)
 function init() {
     elTime.innerText = '0.000'
     elScore.innerText = 0
@@ -80,6 +82,7 @@ function buildBoard() {
 }
 function checkVictory() {
     elEmoji.innerText = WIN
+    alert('you won')
 }
 
 function renderBoard(board) {
@@ -94,6 +97,7 @@ function renderBoard(board) {
                 var cellI = findEmptyCells(board).i
                 var cellJ = findEmptyCells(board).j
                 board[cellI][cellJ].isMine = true
+                // console.log(board[cellI][cellJ])
                 gLevel.mines--
             }
             var currCell = board[i][j];
@@ -134,13 +138,16 @@ function cellClicked(elCell) {
     if (elCell.innerText !== FLAG) {
         if (!elCell.classList.contains('mine')) {
             var count = setMinesNegsCount(i, j, gBoard)
+            // console.log(i,j)
+            // console.log(count)
             elCell.innerText = count
             gGame.shownCount++
+            // console.log(elCell)
         }
         else elCell.innerText = MINE
     }
     if (count === 0) {
-        var cell = expandShown(i, j, gBoard)
+        // var cell = expandShown(i, j, gBoard)
         // console.log('neigh',cell)
         // console.log(elCell)
         // console.log('dataset i ',elCell.dataset.i)
@@ -157,7 +164,8 @@ function cellClicked(elCell) {
         elCell.style.color = 'grey'
 
     }
-    if (elCell.innerText !== FLAG && count !== 0) {
+    if (elCell.innerText !== MINE && FLAG && count !== 0 ) {
+        // console.log("work")
         score++
         var elScore = document.querySelector('.score')
         elScore.innerText = score
@@ -171,9 +179,10 @@ function cellClicked(elCell) {
     }
 
     if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
+        // console.log('xxxxxxxxxxx')
         checkVictory() 
     }
-    console.log('ggame markedCount', gGame.markedCount, 'glevel mines', gLevel.mines, 'glevel size **', gLevel.size ** 2, 'ggame showncount', gGame.shownCount)
+    // console.log('ggame markedCount', gGame.markedCount, 'glevel mines', gLevel.mines, 'glevel size **', gLevel.size ** 2, 'ggame showncount', gGame.shownCount)
     // console.log('glevel mines',gLevel.mines )
     // console.log('glevel size **2',gLevel.size **2)
     // console.log('ggame showncount', gGame.shownCount)
@@ -231,7 +240,10 @@ function setMinesNegsCount(rowIdx, colIdx, board) {
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             if (j < 0 || j >= board[i].length) continue;
             if (i === rowIdx && j === colIdx) continue;
-            if (board[i][j].isMine) neighborsCount++;
+            if (board[i][j].isMine){
+                neighborsCount++;  
+            } 
+
         }
     }
     return neighborsCount;
