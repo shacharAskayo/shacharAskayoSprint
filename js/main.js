@@ -24,6 +24,7 @@ var gInterval;
 var shownCell;
 var className;
 var neighborsCount;
+
 var gLevel = {
     size: 4,
     mines: 2
@@ -77,16 +78,8 @@ function buildBoard() {
     }
     return board
 }
-function checkVictory(board) {
-    for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board[i].length; j++) {
-            if (gLevel.mines=== gGame.markedCount) {
-                elEmoji.innerText = WIN
-            }
-        }
-    }
-    console.log(gLevel.mines)
-    console.log(gGame.markedCount)
+function checkVictory() {
+    elEmoji.innerText = WIN
 }
 
 function renderBoard(board) {
@@ -124,18 +117,20 @@ function cellRightClicked(elm) {
     gGame.markedCount++
     // console.log(gGame.markedCount)
     elm.innerText = FLAG
-    checkVictory(gBoard)
-    
+    // checkVictory(gBoard)
+
 }
 
 function cellClicked(elCell) {
-    checkVictory(gBoard)
+    // checkVictory(gBoard)
     if (elTime.innerText === '0.000') {
         timer()
     }
     if (!gGame.isOn) return
+
     var i = +elCell.dataset.i
     var j = +elCell.dataset.j
+    // console.log(i,j)
     if (elCell.innerText !== FLAG) {
         if (!elCell.classList.contains('mine')) {
             var count = setMinesNegsCount(i, j, gBoard)
@@ -145,16 +140,19 @@ function cellClicked(elCell) {
         else elCell.innerText = MINE
     }
     if (count === 0) {
-        var cells = expandShown(i, j, gBoard)
-        // console.log('cells', cells);
-        // console.log('elcelli', +elCell.dataset.i)
-        // console.log('elcellj', +elCell.dataset.j)
-        // for (var x = 0; x < cells.length; x++) {
-        //     var elNum = document.querySelector('.number')
-        //     elNum.dataset.i=cells[x].i
-        //     elNum.dataset.j = cells[x].j
-        //     elNum.style.backgroundColor = 'grey'
+        var cell = expandShown(i, j, gBoard)
+        // console.log('neigh',cell)
+        // console.log(elCell)
+        // console.log('dataset i ',elCell.dataset.i)
+        // console.log('dataset j ',elCell.dataset.j)
+        // elCell.style.backgroundColor='blue'
+        // elCell.classList.add('empty')
+        // for (var i = 0; i < cell.length; i++) {
+        //         elCell.dataset.[]
+        //         console.log(elCell)
         // }
+        // console.log(cells)
+
         elCell.style.backgroundColor = 'grey'
         elCell.style.color = 'grey'
 
@@ -172,9 +170,13 @@ function cellClicked(elCell) {
         elLIves.innerText = LIVE_2
     }
 
-    // if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
-    //     checkVictory() 
-    // }
+    if (gGame.markedCount === gLevel.mines && ((gLevel.size ** 2) - gLevel.mines) === gGame.shownCount) {
+        checkVictory() 
+    }
+    console.log('ggame markedCount', gGame.markedCount, 'glevel mines', gLevel.mines, 'glevel size **', gLevel.size ** 2, 'ggame showncount', gGame.shownCount)
+    // console.log('glevel mines',gLevel.mines )
+    // console.log('glevel size **2',gLevel.size **2)
+    // console.log('ggame showncount', gGame.shownCount)
     if (elCell.innerText === MINE && lives === 0) {
         elLIves.innerText = DEATH
         gameOver()
@@ -184,8 +186,8 @@ function cellClicked(elCell) {
 
 
 function expandShown(i, j, board) {
-    var freeSpace = findNeighbors(i, j, board)
-    return freeSpace
+    var freeCells = findNeighbors(i, j, board)
+    return freeCells
 }
 
 var elEmoji = document.querySelector('.emoji')
@@ -274,8 +276,6 @@ function changeEmoji() {
     return elEmoji
 }
 
-
-
 function timer() {
     var startTime = Date.now();
     gInterval = setInterval(function () {
@@ -285,3 +285,4 @@ function timer() {
         );
     }, 100);
 }
+
